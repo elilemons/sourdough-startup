@@ -6,9 +6,9 @@ import {
   ThemeProvider,
   Toolbar,
   Typography,
-  Link as DecoratedLink,
+  Link,
 } from '@mui/material';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { HashRouter, Link as RouterLink } from 'react-router-dom';
 import { AppRoutes } from './AppRoutes';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
 
   /* Page markup */
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ThemeProvider theme={darkTheme}>
         <AppBar position='static'>
           <Container>
@@ -38,9 +38,9 @@ function App() {
               >
                 LOGO
               </Typography>
-              <Typography variant='h6' color='inherit' component='div'>
-                <Link to='/'>Home</Link>
-              </Typography>
+              <Link component={RouterLink} to='/'>
+                Home
+              </Link>
             </Toolbar>
           </Container>
         </AppBar>
@@ -48,7 +48,7 @@ function App() {
           <AppRoutes />
         </Container>
       </ThemeProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
