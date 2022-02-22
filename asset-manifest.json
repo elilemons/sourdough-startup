@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/sourdough-startup/static/css/main.380ed0f7.css",
-    "main.js": "/sourdough-startup/static/js/main.59eaad04.js",
+    "main.js": "/sourdough-startup/static/js/main.ab54f3a7.js",
     "index.html": "/sourdough-startup/index.html",
     "main.380ed0f7.css.map": "/sourdough-startup/static/css/main.380ed0f7.css.map",
-    "main.59eaad04.js.map": "/sourdough-startup/static/js/main.59eaad04.js.map"
+    "main.ab54f3a7.js.map": "/sourdough-startup/static/js/main.ab54f3a7.js.map"
   },
   "entrypoints": [
     "static/css/main.380ed0f7.css",
-    "static/js/main.59eaad04.js"
+    "static/js/main.ab54f3a7.js"
   ]
 }
