@@ -1,57 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import {
+  AppBar,
+  Container,
+  createTheme,
+  ThemeProvider,
+  Toolbar,
+  Typography,
+  Link as DecoratedLink,
+} from '@mui/material';
+import { BrowserRouter, Link } from 'react-router-dom';
+import { AppRoutes } from './AppRoutes';
 
 function App() {
+  /* Page Logic */
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+    shape: {
+      borderRadius: 0,
+    },
+  });
+
+  /* Page markup */
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ThemeProvider theme={darkTheme}>
+        <AppBar position='static'>
+          <Container>
+            <Toolbar>
+              {/* TODO Replace with a logo */}
+              <Typography
+                variant='h6'
+                noWrap
+                component='div'
+                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+              >
+                LOGO
+              </Typography>
+              <Typography variant='h6' color='inherit' component='div'>
+                <Link to='/'>Home</Link>
+              </Typography>
+            </Toolbar>
+          </Container>
+        </AppBar>
+        <Container sx={{ mt: 3 }}>
+          <AppRoutes />
+        </Container>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
