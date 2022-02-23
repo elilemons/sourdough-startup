@@ -1,15 +1,8 @@
 import './App.css';
-import {
-  AppBar,
-  Container,
-  createTheme,
-  ThemeProvider,
-  Toolbar,
-  Typography,
-  Link,
-} from '@mui/material';
-import { HashRouter, Link as RouterLink } from 'react-router-dom';
-import { AppRoutes } from './AppRoutes';
+import { Container, createTheme, ThemeProvider } from '@mui/material';
+import { HashRouter } from 'react-router-dom';
+import { AppRoutes } from './app/shared/AppDataGrid/AppRoutes';
+import { AppNavigation } from './app/shared/AppNavigation/AppNavigation';
 
 function App() {
   /* Page Logic */
@@ -26,24 +19,7 @@ function App() {
   return (
     <HashRouter>
       <ThemeProvider theme={darkTheme}>
-        <AppBar position='static'>
-          <Container>
-            <Toolbar>
-              {/* TODO Replace with a logo */}
-              <Typography
-                variant='h6'
-                noWrap
-                component='div'
-                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-              >
-                LOGO
-              </Typography>
-              <Link component={RouterLink} to='/'>
-                Home
-              </Link>
-            </Toolbar>
-          </Container>
-        </AppBar>
+        <AppNavigation />
         <Container sx={{ mt: 3 }}>
           <AppRoutes />
         </Container>

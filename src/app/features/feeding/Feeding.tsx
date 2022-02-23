@@ -3,6 +3,7 @@ import { camelCase } from '../../../utils';
 
 import { GridColDef } from '@mui/x-data-grid';
 import { AppDataGrid } from '../../shared/AppDataGrid/AppDataGrid';
+import { AppBox } from '../../shared/AppBox/AppBox';
 
 interface Props {
   feedings: Feeding[];
@@ -49,7 +50,9 @@ export function Feeding(props: Props) {
   /* Markup */
   return (
     <>
-      <AppDataGrid rows={feedings} columns={columns} rowIdKey={Labels._ID} />
+      <AppBox title={Labels.FEEDINGS} height={500}>
+        <AppDataGrid rows={feedings} columns={columns} rowIdKey={Labels._ID} />
+      </AppBox>
     </>
   );
 }

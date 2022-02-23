@@ -6,7 +6,8 @@ import {
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { Feeding } from '../features/feeding/Feeding';
-import { AppBar, Container, Paper, Typography } from '@mui/material';
+import { AppBar, Container, Paper, Stack, Typography } from '@mui/material';
+import { AppBox } from '../shared/AppBox/AppBox';
 
 export function Home() {
   /* Shortcuts */
@@ -26,16 +27,28 @@ export function Home() {
   /* Markup */
   return (
     <>
-      <AppBar position='static' color='secondary'>
-        <Typography sx={{ ml: 3, my: 1 }} variant='button' component='div'>
-          Feedings
+      <AppBox title='Welcome to Sourdough Startup'>
+        <Typography variant='body1' component='p'>
+          Here you can see this app in component mode. Use the navigation menu
+          to view it in page mode.
         </Typography>
-      </AppBar>
-      <Paper>
-        <Container sx={{ p: 3, height: 500 }}>
+      </AppBox>
+
+      <Stack direction='row' spacing={3}>
+        <Stack width={'50%'}>
           <Feeding feedings={feedings} />
-        </Container>
-      </Paper>
+        </Stack>
+        <Stack
+          direction='column'
+          width={'50%'}
+          justifyContent='space-between'
+          spacing={3}
+        >
+          {/* TODO Starters and Loaves */}
+          <AppBox title='Starters' />
+          <AppBox title='Loaves' />
+        </Stack>
+      </Stack>
     </>
   );
 }

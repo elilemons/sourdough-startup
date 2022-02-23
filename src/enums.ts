@@ -6,6 +6,8 @@ export enum Labels {
   ACQUIRED = 'Acquired',
   NOTES = 'Notes',
   IMAGE = 'Image',
+  FEEDING = 'Feeding',
+  FEEDINGS = 'Feedings',
 }
 
 export enum Rating {
