@@ -6,7 +6,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { Feeding } from '../features/feeding/Feeding';
-import { AppBar, Card, Container, Paper, Typography } from '@mui/material';
+import { AppBar, Container, Paper, Typography } from '@mui/material';
 
 export function Home() {
   /* Shortcuts */
@@ -18,9 +18,6 @@ export function Home() {
   /* Page Logic */
   /* - Trigger initial get call here */
   useLayoutEffect(() => {
-    // TODO Remove this test code
-    console.log('Home useLayoutEffect');
-    //^ TODO Remove this test code
     dispatch(getFeedingsAsync());
   });
 
@@ -29,8 +26,8 @@ export function Home() {
   /* Markup */
   return (
     <>
-      <AppBar position='static'>
-        <Typography sx={{ ml: 1, my: 1 }} variant='button' component='div'>
+      <AppBar position='static' color='secondary'>
+        <Typography sx={{ ml: 3, my: 1 }} variant='button' component='div'>
           Feedings
         </Typography>
       </AppBar>
