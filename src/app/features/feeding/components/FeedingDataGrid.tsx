@@ -1,10 +1,21 @@
-import { GridColDef, GridRowId } from '@mui/x-data-grid';
+import {
+  GridCallbackDetails,
+  GridCellEditCommitParams,
+  GridColDef,
+  GridRowId,
+  MuiBaseEvent,
+  MuiEvent,
+} from '@mui/x-data-grid';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
 import { useAppDispatch } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppDataGrid } from '../../../shared/AppDataGrid/AppDataGrid';
-import { deleteFeature, setSelectedFeatureId } from '../store/feedingSlice';
+import {
+  deleteFeature,
+  setSelectedFeatureId,
+  updateFeature,
+} from '../store/feedingSlice';
 
 interface Props {
   feedings: Feeding[];
@@ -20,6 +31,26 @@ export function FeedingDataGrid(props: Props) {
     dispatch(setSelectedFeatureId(id as string));
   const onDeleteClick = (id: GridRowId) =>
     dispatch(deleteFeature(id as string));
+
+  const onCellEditCommit = (
+    params: GridCellEditCommitParams,
+    event: MuiEvent<MuiBaseEvent>,
+    details: GridCallbackDetails
+  ) => {
+    // TODO Remove this test code
+    console.log('ELITEST onCellEditCommit', { params, event, details });
+    //^ TODO Remove this test code
+    const newItem = feedings
+      .filter((item) => item._id === params.id)
+      .map((item) => ({
+        ...item,
+        [params.field]: params.value,
+      }));
+    // TODO Remove this test code
+    console.log('ELITEST onCellEditCommit', { newItem });
+    //^ TODO Remove this test code
+    dispatch(updateFeature({ ...newItem[0] } as Feeding));
+  };
   /* - Columns */
   const columns: GridColDef[] = [
     {
@@ -58,6 +89,7 @@ export function FeedingDataGrid(props: Props) {
           rows={feedings}
           columns={columns}
           rowIdKey={Labels._ID}
+          onCellEditCommit={onCellEditCommit}
           onRowClick={onRowClick}
           onDeleteClick={onDeleteClick}
           includeActions={true}

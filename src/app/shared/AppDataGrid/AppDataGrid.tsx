@@ -2,9 +2,13 @@ import { Delete } from '@mui/icons-material';
 import {
   DataGrid,
   GridActionsCellItem,
+  GridCallbackDetails,
+  GridCellEditCommitParams,
   GridColDef,
   GridRowId,
   GridRowParams,
+  MuiBaseEvent,
+  MuiEvent,
 } from '@mui/x-data-grid';
 import { Labels } from '../../../enums';
 interface Props<T> {
@@ -15,6 +19,11 @@ interface Props<T> {
   includeActions?: boolean;
 
   onRowClick: (id: GridRowId) => void;
+  onCellEditCommit: (
+    params: GridCellEditCommitParams,
+    event: MuiEvent<MuiBaseEvent>,
+    details: GridCallbackDetails
+  ) => void;
   onDeleteClick?: (id: GridRowId) => void;
 }
 
@@ -26,6 +35,7 @@ export function AppDataGrid<T extends { [key: string]: any }>({
 
   onRowClick,
   onDeleteClick,
+  onCellEditCommit,
 }: Props<T>) {
   /* State */
   /* The markup */
@@ -54,6 +64,7 @@ export function AppDataGrid<T extends { [key: string]: any }>({
         }
         getRowId={(item) => item[rowIdKey]}
         onRowClick={(params: GridRowParams) => onRowClick(params.id)}
+        onCellEditCommit={onCellEditCommit}
       />
     </>
   );
