@@ -58,7 +58,6 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
         initialValues={initialValues}
         enableReinitialize
         onSubmit={onSubmit}
-        onReset={onReset}
       >
         <Form id='feeding-form'>
           <Stack spacing={2}>

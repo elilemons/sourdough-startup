@@ -8,7 +8,7 @@ export function AppRoutes() {
     <Routes>
       <Route index element={<Home />} />
       <Route path='/' element={<App />} />
-      {/* <Route path='/feeding' element={<FeedingContainer />} /> */}
+      <Route path='/feeding' element={<FeedingContainer />} />
     </Routes>
   );
 }
