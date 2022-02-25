@@ -36,9 +36,9 @@ export function AppNavigation() {
               <Link component={RouterLink} to='/'>
                 Home
               </Link>
-              <Link component={RouterLink} to='/feeding'>
+              {/* <Link component={RouterLink} to='/feeding'>
                 Feeding
-              </Link>
+              </Link> */}
             </Stack>
           </Stack>
         </Toolbar>

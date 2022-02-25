@@ -1,33 +1,50 @@
 import { Clear, Save } from '@mui/icons-material';
 import { Stack, TextField } from '@mui/material';
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, useFormikContext } from 'formik';
+import { useLayoutEffect } from 'react';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppButton } from '../../../shared/AppButton/AppButton';
-import { setSelectedFeatureId } from '../store/feedingSlice';
+import {
+  selectSelectedFeatureItem,
+  setSelectedFeatureId,
+} from '../store/feedingSlice';
 
 interface Props {
   isLoading: boolean;
   selectedFeeding?: Feeding;
 }
 
+interface FeedingFormValues {
+  amount: string;
+  date: string;
+  notes: string;
+  starterId: string;
+}
+
 export function FeedingForm({ isLoading, selectedFeeding }: Props) {
   /* Shortcuts */
   const dispatch = useAppDispatch();
 
+  // const selectedFeeding = useAppSelector(selectSelectedFeatureItem);
   /* Page Logic */
-  const initialValues = [
-    {
-      amount: '',
-      date: '',
-      notes: '',
-      starterId: '',
-    },
-  ];
+  const initialValues = selectedFeeding
+    ? {
+        amount: selectedFeeding?.amount || '',
+        date: selectedFeeding?.date || '',
+        notes: selectedFeeding?.notes || '',
+        starterId: selectedFeeding?.starterId || '',
+      }
+    : {
+        amount: '',
+        date: '',
+        notes: '',
+        starterId: '',
+      };
 
-  const onSubmit = (values: { [key: string]: string }[]) => {
+  const onSubmit = (values: FeedingFormValues) => {
     // TODO Remove this test code
     console.log('ELITEST', { values });
     //^ TODO Remove this test code
@@ -39,43 +56,39 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
     <AppBox title='Feeding Form'>
       <Formik
         initialValues={initialValues}
+        enableReinitialize
         onSubmit={onSubmit}
         onReset={onReset}
-        enableReinitialize={true}
       >
         <Form id='feeding-form'>
           <Stack spacing={2}>
             <Stack direction='row' spacing={2}>
               <Field
+                name='starterId'
                 as={TextField}
-                name={camelCase(Labels.STARTER_ID)}
                 label={Labels.STARTER}
-                value={selectedFeeding?.starterId || ''}
                 fullWidth
               />
               <Field
-                as={TextField}
                 name={camelCase(Labels.AMOUNT)}
+                as={TextField}
                 label={Labels.AMOUNT}
-                value={selectedFeeding?.amount || ''}
                 fullWidth
               />
               <Field
-                as={TextField}
                 name={camelCase(Labels.DATE)}
+                as={TextField}
                 label={Labels.DATE}
-                value={selectedFeeding?.date || ''}
                 fullWidth
               />
             </Stack>
             <Field
-              as={TextField}
               name={camelCase(Labels.NOTES)}
+              as={TextField}
               label={Labels.NOTES}
               multiline
               minRows={2}
               maxRows={4}
-              value={selectedFeeding?.notes || ''}
             />
           </Stack>
           <Stack direction='row' spacing={2}>
