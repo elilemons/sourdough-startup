@@ -1,7 +1,7 @@
 import './App.css';
 import { Container, createTheme, ThemeProvider } from '@mui/material';
 import { HashRouter } from 'react-router-dom';
-import { AppRoutes } from './app/shared/AppDataGrid/AppRoutes';
+import { AppRoutes } from './app/shared/AppRoutes';
 import { AppNavigation } from './app/shared/AppNavigation/AppNavigation';
 import { Home } from './app/pages/Home';
 

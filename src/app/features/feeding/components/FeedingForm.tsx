@@ -1,4 +1,4 @@
-import { Clear, Save } from '@mui/icons-material';
+import { Add, Clear, Save } from '@mui/icons-material';
 import { Stack, TextField } from '@mui/material';
 import { Field, Form, Formik, useFormikContext } from 'formik';
 import { useLayoutEffect } from 'react';
@@ -90,21 +90,30 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
               maxRows={4}
             />
           </Stack>
-          <Stack direction='row' spacing={2}>
+          <Stack direction='row' spacing={2} justifyContent='space-between'>
             <AppButton
-              color='success'
+              color='primary'
               isLoading={isLoading}
-              startIcon={<Save />}
-              label={Labels.SAVE}
-              type='submit'
-            />
-            <AppButton
-              color='warning'
-              startIcon={<Clear />}
-              label={Labels.CLEAR}
+              startIcon={<Add />}
+              label={Labels.ADD}
               type='button'
-              onClick={() => onReset()}
             />
+            <Stack direction='row'>
+              <AppButton
+                color='success'
+                isLoading={isLoading}
+                startIcon={<Save />}
+                label={Labels.SAVE}
+                type='submit'
+              />
+              <AppButton
+                color='warning'
+                startIcon={<Clear />}
+                label={Labels.CLEAR}
+                type='button'
+                onClick={() => onReset()}
+              />
+            </Stack>
           </Stack>
         </Form>
       </Formik>

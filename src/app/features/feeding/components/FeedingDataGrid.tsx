@@ -4,7 +4,7 @@ import { camelCase } from '../../../../utils';
 import { useAppDispatch } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppDataGrid } from '../../../shared/AppDataGrid/AppDataGrid';
-import { setSelectedFeatureId } from '../store/feedingSlice';
+import { deleteFeature, setSelectedFeatureId } from '../store/feedingSlice';
 
 interface Props {
   feedings: Feeding[];
@@ -18,7 +18,8 @@ export function FeedingDataGrid(props: Props) {
   /* Page Logic */
   const onRowClick = (id: GridRowId) =>
     dispatch(setSelectedFeatureId(id as string));
-
+  const onDeleteClick = (id: GridRowId) =>
+    dispatch(deleteFeature(id as string));
   /* - Columns */
   const columns: GridColDef[] = [
     {
@@ -58,6 +59,8 @@ export function FeedingDataGrid(props: Props) {
           columns={columns}
           rowIdKey={Labels._ID}
           onRowClick={onRowClick}
+          onDeleteClick={onDeleteClick}
+          includeActions={true}
         />
       </AppBox>
     </>
