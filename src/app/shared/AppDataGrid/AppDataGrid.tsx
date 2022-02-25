@@ -1,14 +1,24 @@
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRowId,
+  GridRowParams,
+} from '@mui/x-data-grid';
 interface Props<T> {
   columns: GridColDef[];
   rows: T[];
   rowIdKey: string;
+
+  onRowClick: (id: GridRowId) => void;
 }
 
-export function AppDataGrid<T extends { [key: string]: any }>(props: Props<T>) {
-  /* Shortcuts */
-  const { columns, rows, rowIdKey } = props;
+export function AppDataGrid<T extends { [key: string]: any }>({
+  columns,
+  rows,
+  rowIdKey,
 
+  onRowClick,
+}: Props<T>) {
   /* State */
   /* The markup */
   return (
@@ -17,6 +27,7 @@ export function AppDataGrid<T extends { [key: string]: any }>(props: Props<T>) {
         rows={rows}
         columns={columns}
         getRowId={(item) => item[rowIdKey]}
+        onRowClick={(params: GridRowParams) => onRowClick(params.id)}
       />
     </>
   );

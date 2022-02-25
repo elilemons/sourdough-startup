@@ -1,4 +1,4 @@
-import { feedings } from './feedingData';
+import { feedings } from '../feedingData';
 
 export function getFeedings() {
   // TODO Remove this test code

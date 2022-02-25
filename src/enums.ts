@@ -2,12 +2,16 @@ export enum Labels {
   _ID = '_id',
   ID = 'Id',
   AMOUNT = 'Amount',
+  CLEAR = 'Clear',
   DATE = 'Date',
   ACQUIRED = 'Acquired',
   NOTES = 'Notes',
   IMAGE = 'Image',
   FEEDING = 'Feeding',
   FEEDINGS = 'Feedings',
+  STARTER_ID = 'Starter Id',
+  STARTER = 'Starter',
+  SAVE = 'Save',
 }
 
 export enum Rating {

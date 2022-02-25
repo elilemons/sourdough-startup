@@ -1,29 +1,8 @@
-import { useLayoutEffect } from 'react';
-import {
-  getFeedingsAsync,
-  selectFeatureItems,
-} from '../features/feeding/feedingSlice';
-import { useAppDispatch, useAppSelector } from '../hooks';
-
-import { Feeding } from '../features/feeding/Feeding';
-import { AppBar, Container, Paper, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { AppBox } from '../shared/AppBox/AppBox';
+import { FeedingContainer } from '../features/feeding/components/FeedingContainer';
 
 export function Home() {
-  /* Shortcuts */
-  const dispatch = useAppDispatch();
-
-  /* Selectors */
-  const feedings = useAppSelector(selectFeatureItems);
-
-  /* Page Logic */
-  /* - Trigger initial get call here */
-  useLayoutEffect(() => {
-    dispatch(getFeedingsAsync());
-  });
-
-  /* Testing */
-
   /* Markup */
   return (
     <>
@@ -36,7 +15,7 @@ export function Home() {
 
       <Stack direction='row' spacing={3}>
         <Stack width={'50%'}>
-          <Feeding feedings={feedings} />
+          <FeedingContainer />
         </Stack>
         <Stack
           direction='column'

@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from './features/counter/counterSlice';
-import feedingReducer from './features/feeding/feedingSlice';
+import feedingReducer from './features/feeding/store/feedingSlice';
 
 export const store = configureStore({
   reducer: {
