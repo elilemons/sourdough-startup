@@ -11,7 +11,7 @@ import { Link as RouterLink } from 'react-router-dom';
 export function AppNavigation() {
   return (
     <AppBar position='static'>
-      <Container>
+      <Container maxWidth='xl'>
         <Toolbar>
           {/* TODO Replace with a logo */}
           <Stack

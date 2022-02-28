@@ -6,12 +6,14 @@ export function Home() {
   /* Markup */
   return (
     <>
-      <AppBox title='Welcome to Sourdough Startup'>
-        <Typography variant='body1' component='p'>
-          Here you can see this app in component mode. Use the navigation menu
-          to view it in page mode.
-        </Typography>
-      </AppBox>
+      <Stack direction='row' spacing={2}>
+        <AppBox title='Welcome to Sourdough Startup' width='50%'>
+          <Typography variant='body1' component='p'>
+            Here you can see this app in component mode. Use the navigation menu
+            to view it in page mode.
+          </Typography>
+        </AppBox>
+      </Stack>
 
       <Stack direction='row' spacing={3}>
         <Stack width={'50%'}>

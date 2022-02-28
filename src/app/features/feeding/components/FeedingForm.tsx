@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppButton } from '../../../shared/AppButton/AppButton';
 import {
-  createFeature,
+  createFeedingAsync,
   selectSelectedFeatureItem,
   setSelectedFeatureId,
   updateFeature,
@@ -20,7 +20,7 @@ interface Props {
 }
 
 interface FeedingFormValues {
-  amount: string;
+  amount: number;
   date: string;
   notes: string;
   starterId: string;
@@ -34,25 +34,25 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
   /* Page Logic */
   const initialValues = selectedFeeding
     ? {
-        amount: selectedFeeding?.amount || '',
+        amount: selectedFeeding?.amount || 0,
         date: selectedFeeding?.date || '',
         notes: selectedFeeding?.notes || '',
         starterId: selectedFeeding?.starterId || '',
       }
     : {
-        amount: '',
+        amount: 0,
         date: '',
         notes: '',
         starterId: '',
       };
 
   const onAdd = (values: FeedingFormValues) => {
-    dispatch(createFeature({ ...values } as Feeding));
+    dispatch(createFeedingAsync({ ...values } as Feeding));
   };
 
   const onSubmit = (values: FeedingFormValues) => {
     // TODO Remove this test code
-    console.log('ELITEST', { values });
+    console.log('ELITEST onSubmit', { values });
     //^ TODO Remove this test code
     dispatch(updateFeature({ ...selectedFeeding, ...values } as Feeding));
   };
@@ -81,6 +81,9 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
                   as={TextField}
                   label={Labels.AMOUNT}
                   fullWidth
+                  InputProps={{
+                    type: 'number',
+                  }}
                 />
                 <Field
                   name={camelCase(Labels.DATE)}

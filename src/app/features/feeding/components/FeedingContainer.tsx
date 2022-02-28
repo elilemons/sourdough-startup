@@ -22,10 +22,8 @@ export function FeedingContainer() {
 
   /* - Trigger initial get call here */
   useLayoutEffect(() => {
-    if (feedings && feedings.length < 1) {
-      dispatch(getFeedingsAsync());
-    }
-  });
+    dispatch(getFeedingsAsync());
+  }, [dispatch]);
 
   /* Testing */
 

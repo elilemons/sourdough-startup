@@ -21,7 +21,7 @@ function App() {
     <HashRouter>
       <ThemeProvider theme={darkTheme}>
         <AppNavigation />
-        <Container sx={{ mt: 3 }}>
+        <Container maxWidth='xl' sx={{ mt: 3 }}>
           <AppRoutes />
         </Container>
       </ThemeProvider>

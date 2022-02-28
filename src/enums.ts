@@ -11,6 +11,8 @@ export enum Labels {
   IMAGE = 'Image',
   FEEDING = 'Feeding',
   FEEDINGS = 'Feedings',
+  LOAF = 'Loaf',
+  LOAVES = 'Loaves',
   STARTER_ID = 'Starter Id',
   STARTER = 'Starter',
   SAVE = 'Save',
@@ -22,4 +24,11 @@ export enum Rating {
   THREE = 3,
   FOUR = 4,
   FIVE = 5,
+}
+
+export enum HTTP_Methods {
+  GET = 'GET',
+  POST = 'POST',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE',
 }

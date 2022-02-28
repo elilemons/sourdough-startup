@@ -1,0 +1,137 @@
+import { HTTP_Methods } from '../../enums';
+
+const request: RequestInit = {
+  headers: {
+    authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+    'Content-Type': 'application/json',
+  },
+};
+
+const apiUrl = () =>
+  `${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_DATABASE_ID}`;
+
+export async function getItems<T>({ featureName }: ApiRequest): Promise<T[]> {
+  return await fetch(`${apiUrl()}/${featureName}`, {
+    ...request,
+    method: HTTP_Methods.GET,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // TODO Remove this test code
+      console.log('ELITEST getItems SUCESSS', { data });
+      //^ TODO Remove this test code
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      return data.records.map((record: AirTableRecord) => ({
+        ...record.fields,
+        _id: record.id,
+      }));
+    })
+    .catch((error) => {
+      console.error('ELITEST getItems FAILURE', { error });
+    });
+}
+
+export async function createItem<T extends { [key: string]: any }>({
+  featureName,
+  newItem,
+}: PostRequest<T>): Promise<T[]> {
+  return await fetch(`${apiUrl()}/${featureName}`, {
+    ...request,
+    method: HTTP_Methods.POST,
+    body: JSON.stringify({
+      records: [
+        {
+          fields: {
+            ...newItem,
+            starterId: [newItem.starterId],
+          },
+        },
+      ],
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // TODO Remove this test code
+      console.log('ELITEST createItem SUCCESS 1', { data });
+      //^ TODO Remove this test code
+      const res = data.records.map((record: AirTableRecord) => ({
+        ...record.fields,
+        _id: record.id,
+      }));
+
+      // TODO Remove this test code
+      console.log('ELITEST createItem SUCCESS 2', { res });
+      //^ TODO Remove this test code
+      return res;
+    })
+    .catch((error) => {
+      console.error('ELITEST createItem FAILURE', { error });
+    });
+}
+
+export async function updateItem<T extends { [key: string]: any }>({
+  featureName,
+  updatedItem,
+}: UpdateRequest<T>): Promise<T[]> {
+  return await fetch(`${apiUrl()}/${featureName}`, {
+    ...request,
+    method: HTTP_Methods.PATCH,
+    body: JSON.stringify({
+      records: [
+        {
+          id: updatedItem._id,
+          fields: {
+            ...updatedItem,
+            starterId: [updatedItem.starterId],
+          },
+        },
+      ],
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // TODO Remove this test code
+      console.log('ELITEST updateItem SUCCESS', { data });
+      //^ TODO Remove this test code
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      return data.records.map((record: AirTableRecord) => ({
+        ...record.fields,
+
+        _id: record.id,
+      }));
+    })
+    .catch((error) => {
+      console.error('ELITEST updateItem FAILURE', { error });
+    });
+}
+export async function deleteItem({
+  featureName,
+  itemId,
+}: DeleteRequest): Promise<DeleteResponse> {
+  return await fetch(`${apiUrl()}/${featureName}/${itemId}`, {
+    ...request,
+    method: HTTP_Methods.DELETE,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // TODO Remove this test code
+      console.log('ELITEST deleteItem SUCCESS', { data });
+      //^ TODO Remove this test code
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      return data.records;
+    })
+    .catch((error) => {
+      console.error('ELITEST deleteItem ERROR', { error });
+    });
+}

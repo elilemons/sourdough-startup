@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
 
-import { getFeedings } from './feedingAPI';
 import { v4 as uuidv4 } from 'uuid';
+import { Labels } from '../../../../enums';
+import { camelCase } from '../../../../utils';
+import { createItem, getItems } from '../../../utils/api';
+import { getFeedings } from './feedingAPI';
 
 const initialState: InitialStateType<Feeding> = {
   items: [],
@@ -19,12 +22,25 @@ const initialState: InitialStateType<Feeding> = {
 export const getFeedingsAsync = createAsyncThunk(
   'feeding/getFeedings',
   async () => {
-    // TODO Remove this test code
-    console.log('ELITEST getFeedingsAsync called');
-    //^ TODO Remove this test code
-    const response = await getFeedings();
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    const response = await getItems<Feeding>({
+      featureName: camelCase(Labels.FEEDING),
+    });
+    // The value we return becomes the `fulfilled` action payload
+    return response;
+  }
+);
+
+export const createFeedingAsync = createAsyncThunk(
+  'feeding/createFeeding',
+  async (newItem: Feeding) => {
+    // The value we return becomes the `fulfilled` action payload
+    const response = await createItem<Feeding>({
+      featureName: camelCase(Labels.FEEDING),
+      newItem,
+    });
+    // The value we return becomes the `fulfilled` action payload
+    return response;
   }
 );
 
@@ -38,14 +54,14 @@ export const feedingSlice = createSlice({
     deleteFeature: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item._id !== action.payload);
     },
-    createFeature: (state, action: PayloadAction<Feeding>) => {
-      action.payload._id = uuidv4(); // TODO Remove when API created
-      state.items.push(action.payload);
+    // createFeature: (state, action: PayloadAction<Feeding>) => {
+    //   action.payload._id = uuidv4(); // TODO Remove when API created
+    //   state.items.push(action.payload);
 
-      if (action.payload._id) {
-        state.selectedFeatureId = action.payload._id;
-      }
-    },
+    //   if (action.payload._id) {
+    //     state.selectedFeatureId = action.payload._id;
+    //   }
+    // },
     updateFeature: (state, action: PayloadAction<Feeding>) => {
       state.items = state.items
         .filter((item) => item._id === action.payload._id)
@@ -67,16 +83,20 @@ export const feedingSlice = createSlice({
         state.items = action.payload;
         state.isLoading = false;
         state.isLoaded = true;
+      })
+      .addCase(createFeedingAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createFeedingAsync.fulfilled, (state, action) => {
+        state.items = state.items.concat(action.payload);
+        state.isLoading = false;
+        state.isLoaded = true;
       });
   },
 });
 
-export const {
-  createFeature,
-  updateFeature,
-  deleteFeature,
-  setSelectedFeatureId,
-} = feedingSlice.actions;
+export const { updateFeature, deleteFeature, setSelectedFeatureId } =
+  feedingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
