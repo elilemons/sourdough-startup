@@ -1,5 +1,5 @@
 interface Feeding {
-  _id?: string;
+  id?: string;
   amount: number;
   date: string;
   notes?: string;

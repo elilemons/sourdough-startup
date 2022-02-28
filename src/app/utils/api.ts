@@ -26,7 +26,7 @@ export async function getItems<T>({ featureName }: ApiRequest): Promise<T[]> {
 
       return data.records.map((record: AirTableRecord) => ({
         ...record.fields,
-        _id: record.id,
+        id: record.id,
       }));
     })
     .catch((error) => {
@@ -46,7 +46,7 @@ export async function createItem<T extends { [key: string]: any }>({
         {
           fields: {
             ...newItem,
-            starterId: [newItem.starterId],
+            starterId: newItem.starterId,
           },
         },
       ],
@@ -63,7 +63,7 @@ export async function createItem<T extends { [key: string]: any }>({
       //^ TODO Remove this test code
       const res = data.records.map((record: AirTableRecord) => ({
         ...record.fields,
-        _id: record.id,
+        id: record.id,
       }));
 
       // TODO Remove this test code
@@ -80,16 +80,21 @@ export async function updateItem<T extends { [key: string]: any }>({
   featureName,
   updatedItem,
 }: UpdateRequest<T>): Promise<T[]> {
+  // TODO Remove this test code
+  console.log('ELITEST updateItem', { updatedItem });
+  //^ TODO Remove this test code
+  const id = updatedItem.id;
+  delete updatedItem._id;
+  delete updatedItem.id;
   return await fetch(`${apiUrl()}/${featureName}`, {
     ...request,
     method: HTTP_Methods.PATCH,
     body: JSON.stringify({
       records: [
         {
-          id: updatedItem._id,
+          id,
           fields: {
             ...updatedItem,
-            starterId: [updatedItem.starterId],
           },
         },
       ],
@@ -105,8 +110,7 @@ export async function updateItem<T extends { [key: string]: any }>({
       }
       return data.records.map((record: AirTableRecord) => ({
         ...record.fields,
-
-        _id: record.id,
+        id: record.id,
       }));
     })
     .catch((error) => {

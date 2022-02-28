@@ -14,7 +14,7 @@ import { AppDataGrid } from '../../../shared/AppDataGrid/AppDataGrid';
 import {
   deleteFeature,
   setSelectedFeatureId,
-  updateFeature,
+  updateFeedingAsync,
 } from '../store/feedingSlice';
 
 interface Props {
@@ -41,7 +41,7 @@ export function FeedingDataGrid(props: Props) {
     console.log('ELITEST onCellEditCommit', { params, event, details });
     //^ TODO Remove this test code
     const newItem = feedings
-      .filter((item) => item._id === params.id)
+      .filter((item) => item.id === params.id)
       .map((item) => ({
         ...item,
         [params.field]: params.value,
@@ -49,12 +49,12 @@ export function FeedingDataGrid(props: Props) {
     // TODO Remove this test code
     console.log('ELITEST onCellEditCommit', { newItem });
     //^ TODO Remove this test code
-    dispatch(updateFeature({ ...newItem[0] } as Feeding));
+    dispatch(updateFeedingAsync({ ...newItem[0] } as Feeding));
   };
   /* - Columns */
   const columns: GridColDef[] = [
     {
-      field: '_id',
+      field: 'id',
       headerName: Labels.ID,
       hide: true,
     },
@@ -88,7 +88,7 @@ export function FeedingDataGrid(props: Props) {
         <AppDataGrid
           rows={feedings}
           columns={columns}
-          rowIdKey={Labels._ID}
+          rowIdKey={'id'}
           onCellEditCommit={onCellEditCommit}
           onRowClick={onRowClick}
           onDeleteClick={onDeleteClick}

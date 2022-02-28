@@ -4,7 +4,7 @@ import { RootState } from '../../../store';
 import { v4 as uuidv4 } from 'uuid';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
-import { createItem, getItems } from '../../../utils/api';
+import { createItem, getItems, updateItem } from '../../../utils/api';
 import { getFeedings } from './feedingAPI';
 
 const initialState: InitialStateType<Feeding> = {
@@ -44,6 +44,19 @@ export const createFeedingAsync = createAsyncThunk(
   }
 );
 
+export const updateFeedingAsync = createAsyncThunk(
+  'feeding/updateFeeding',
+  async (updatedItem: Feeding) => {
+    // The value we return becomes the `fulfilled` action payload
+    const response = await updateItem<Feeding>({
+      featureName: camelCase(Labels.FEEDING),
+      updatedItem,
+    });
+    // The value we return becomes the `fulfilled` action payload
+    return response;
+  }
+);
+
 export const feedingSlice = createSlice({
   name: 'feeding',
   initialState,
@@ -52,24 +65,7 @@ export const feedingSlice = createSlice({
       state.selectedFeatureId = action.payload;
     },
     deleteFeature: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item._id !== action.payload);
-    },
-    // createFeature: (state, action: PayloadAction<Feeding>) => {
-    //   action.payload._id = uuidv4(); // TODO Remove when API created
-    //   state.items.push(action.payload);
-
-    //   if (action.payload._id) {
-    //     state.selectedFeatureId = action.payload._id;
-    //   }
-    // },
-    updateFeature: (state, action: PayloadAction<Feeding>) => {
-      state.items = state.items
-        .filter((item) => item._id === action.payload._id)
-        .map((item) => ({
-          ...item,
-          ...action.payload,
-        }))
-        .concat(state.items.filter((item) => item._id !== action.payload._id));
+      state.items = state.items.filter((item) => item.id !== action.payload);
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -84,6 +80,10 @@ export const feedingSlice = createSlice({
         state.isLoading = false;
         state.isLoaded = true;
       })
+      .addCase(getFeedingsAsync.rejected, (state) => {
+        state.isLoading = false;
+        state.isLoaded = false;
+      })
       .addCase(createFeedingAsync.pending, (state) => {
         state.isLoading = true;
       })
@@ -91,12 +91,33 @@ export const feedingSlice = createSlice({
         state.items = state.items.concat(action.payload);
         state.isLoading = false;
         state.isLoaded = true;
+      })
+      .addCase(createFeedingAsync.rejected, (state) => {
+        state.isLoading = false;
+        state.isLoaded = false;
+      })
+      .addCase(updateFeedingAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateFeedingAsync.fulfilled, (state, action) => {
+        const updatedIds = action.payload.map((item) => item.id);
+
+        state.items = [
+          ...state.items
+            .filter((item) => !updatedIds.includes(item.id))
+            .concat(action.payload),
+        ];
+        state.isLoading = false;
+        state.isLoaded = true;
+      })
+      .addCase(updateFeedingAsync.rejected, (state) => {
+        state.isLoading = false;
+        state.isLoaded = false;
       });
   },
 });
 
-export const { updateFeature, deleteFeature, setSelectedFeatureId } =
-  feedingSlice.actions;
+export const { deleteFeature, setSelectedFeatureId } = feedingSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -110,7 +131,7 @@ export const selectSelectedFeatureId = (state: RootState) =>
   state.feeding.selectedFeatureId;
 export const selectSelectedFeatureItem = (state: RootState) =>
   state.feeding.items.find(
-    (item) => item._id === selectSelectedFeatureId(state)
+    (item) => item.id === selectSelectedFeatureId(state)
   );
 
 export default feedingSlice.reducer;

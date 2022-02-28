@@ -11,7 +11,7 @@ import {
   createFeedingAsync,
   selectSelectedFeatureItem,
   setSelectedFeatureId,
-  updateFeature,
+  updateFeedingAsync,
 } from '../store/feedingSlice';
 
 interface Props {
@@ -54,7 +54,7 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
     // TODO Remove this test code
     console.log('ELITEST onSubmit', { values });
     //^ TODO Remove this test code
-    dispatch(updateFeature({ ...selectedFeeding, ...values } as Feeding));
+    dispatch(updateFeedingAsync({ ...selectedFeeding, ...values } as Feeding));
   };
 
   const onReset = () => dispatch(setSelectedFeatureId(''));
