@@ -7,16 +7,21 @@ import {
   GridColDef,
   GridRowId,
   GridRowParams,
+  GridSortingInitialState,
+  GridSortModel,
   MuiBaseEvent,
   MuiEvent,
 } from '@mui/x-data-grid';
 import { Labels } from '../../../enums';
+import { camelCase } from '../../../utils';
 interface Props<T> {
   columns: GridColDef[];
   rows: T[];
   rowIdKey: string;
 
   includeActions?: boolean;
+
+  sortModel?: GridSortModel;
 
   onRowClick: (id: GridRowId) => void;
   onCellEditCommit: (
@@ -32,6 +37,7 @@ export function AppDataGrid<T extends { [key: string]: any }>({
   includeActions,
   rows,
   rowIdKey,
+  sortModel,
 
   onRowClick,
   onDeleteClick,
@@ -42,6 +48,11 @@ export function AppDataGrid<T extends { [key: string]: any }>({
   return (
     <>
       <DataGrid
+        initialState={{
+          sorting: {
+            sortModel: sortModel,
+          },
+        }}
         rows={rows}
         columns={
           !includeActions

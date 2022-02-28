@@ -46,7 +46,7 @@ export async function createItem<T extends { [key: string]: any }>({
         {
           fields: {
             ...newItem,
-            starterId: newItem.starterId,
+            starterId: [newItem.starterId],
           },
         },
       ],
@@ -119,9 +119,9 @@ export async function updateItem<T extends { [key: string]: any }>({
 }
 export async function deleteItem({
   featureName,
-  itemId,
+  id,
 }: DeleteRequest): Promise<DeleteResponse> {
-  return await fetch(`${apiUrl()}/${featureName}/${itemId}`, {
+  return await fetch(`${apiUrl()}/${featureName}/${id}`, {
     ...request,
     method: HTTP_Methods.DELETE,
   })
@@ -133,7 +133,7 @@ export async function deleteItem({
       if (data.error) {
         throw new Error(data.error);
       }
-      return data.records;
+      return data;
     })
     .catch((error) => {
       console.error('ELITEST deleteItem ERROR', { error });

@@ -50,7 +50,7 @@ interface UpdateRequest<T> extends ApiRequest {
 }
 
 interface DeleteRequest extends ApiRequest {
-  itemId: string;
+  id: string;
 }
 
 interface AirTableRecord {

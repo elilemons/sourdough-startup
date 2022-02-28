@@ -3,6 +3,7 @@ import {
   GridCellEditCommitParams,
   GridColDef,
   GridRowId,
+  GridSortingInitialState,
   MuiBaseEvent,
   MuiEvent,
 } from '@mui/x-data-grid';
@@ -12,7 +13,7 @@ import { useAppDispatch } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppDataGrid } from '../../../shared/AppDataGrid/AppDataGrid';
 import {
-  deleteFeature,
+  deleteFeedingAsync,
   setSelectedFeatureId,
   updateFeedingAsync,
 } from '../store/feedingSlice';
@@ -30,7 +31,7 @@ export function FeedingDataGrid(props: Props) {
   const onRowClick = (id: GridRowId) =>
     dispatch(setSelectedFeatureId(id as string));
   const onDeleteClick = (id: GridRowId) =>
-    dispatch(deleteFeature(id as string));
+    dispatch(deleteFeedingAsync(id as string));
 
   const onCellEditCommit = (
     params: GridCellEditCommitParams,
@@ -93,6 +94,12 @@ export function FeedingDataGrid(props: Props) {
           onRowClick={onRowClick}
           onDeleteClick={onDeleteClick}
           includeActions={true}
+          sortModel={[
+            {
+              field: camelCase(Labels.DATE),
+              sort: 'asc',
+            },
+          ]}
         />
       </AppBox>
     </>

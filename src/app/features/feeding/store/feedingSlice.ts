@@ -4,7 +4,12 @@ import { RootState } from '../../../store';
 import { v4 as uuidv4 } from 'uuid';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
-import { createItem, getItems, updateItem } from '../../../utils/api';
+import {
+  createItem,
+  deleteItem,
+  getItems,
+  updateItem,
+} from '../../../utils/api';
 import { getFeedings } from './feedingAPI';
 
 const initialState: InitialStateType<Feeding> = {
@@ -57,6 +62,19 @@ export const updateFeedingAsync = createAsyncThunk(
   }
 );
 
+export const deleteFeedingAsync = createAsyncThunk(
+  'feeding/deleteFeeding',
+  async (id: string) => {
+    // The value we return becomes the `fulfilled` action payload
+    const response = await deleteItem({
+      featureName: camelCase(Labels.FEEDING),
+      id,
+    });
+    // The value we return becomes the `fulfilled` action payload
+    return response;
+  }
+);
+
 export const feedingSlice = createSlice({
   name: 'feeding',
   initialState,
@@ -91,6 +109,7 @@ export const feedingSlice = createSlice({
         state.items = state.items.concat(action.payload);
         state.isLoading = false;
         state.isLoaded = true;
+        state.selectedFeatureId = action.payload[0].id || '';
       })
       .addCase(createFeedingAsync.rejected, (state) => {
         state.isLoading = false;
@@ -111,6 +130,29 @@ export const feedingSlice = createSlice({
         state.isLoaded = true;
       })
       .addCase(updateFeedingAsync.rejected, (state) => {
+        state.isLoading = false;
+        state.isLoaded = false;
+      })
+      .addCase(deleteFeedingAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteFeedingAsync.fulfilled, (state, action) => {
+        // TODO Remove this test code
+        console.log('ELITEST delete feeding async', {
+          payload: action.payload,
+        });
+        //^ TODO Remove this test code
+        state.items = [
+          ...state.items.filter((item) => item.id !== action.payload.id),
+        ];
+        state.isLoading = false;
+        state.isLoaded = true;
+
+        if (state.selectedFeatureId === action.payload.id) {
+          state.selectedFeatureId = '';
+        }
+      })
+      .addCase(deleteFeedingAsync.rejected, (state) => {
         state.isLoading = false;
         state.isLoaded = false;
       });
