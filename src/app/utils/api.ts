@@ -61,6 +61,7 @@ export async function createItem<T extends { [key: string]: any }>({
       // TODO Remove this test code
       console.log('ELITEST createItem SUCCESS 1', { data });
       //^ TODO Remove this test code
+
       const res = data.records.map((record: AirTableRecord) => ({
         ...record.fields,
         id: record.id,

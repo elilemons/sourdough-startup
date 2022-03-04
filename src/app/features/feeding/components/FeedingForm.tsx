@@ -1,4 +1,5 @@
 import { Add, Clear, Save } from '@mui/icons-material';
+import { DatePicker } from '@mui/lab';
 import { Stack, TextField } from '@mui/material';
 import { Field, Form, Formik, FormikProps, useFormikContext } from 'formik';
 import { useLayoutEffect } from 'react';
@@ -35,13 +36,13 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
   const initialValues = selectedFeeding
     ? {
         amount: selectedFeeding?.amount || 0,
-        date: selectedFeeding?.date || '',
+        date: selectedFeeding?.date || new Date().toString(),
         notes: selectedFeeding?.notes || '',
         starterId: selectedFeeding?.starterId || '',
       }
     : {
         amount: 0,
-        date: '',
+        date: new Date().toString(),
         notes: '',
         starterId: '',
       };
@@ -86,10 +87,16 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
                   }}
                 />
                 <Field
+                  as={DatePicker}
                   name={camelCase(Labels.DATE)}
-                  as={TextField}
                   label={Labels.DATE}
                   fullWidth
+                  onChange={(params: any) =>
+                    props.setFieldValue(camelCase(Labels.DATE), params)
+                  }
+                  renderInput={(params: any) => (
+                    <TextField {...params} sx={{ width: '100%' }} />
+                  )}
                 />
               </Stack>
               <Field
