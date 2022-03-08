@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Lastly this app relies heavily on [MUI](https://mui.com/).
 
+This app is for tracking when you feed and bake sourdough starters.
+
 ## Available Scripts
 
 In the project directory, you can run:
