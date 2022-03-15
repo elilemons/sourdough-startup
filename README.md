@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template. Additionally, the API was created by Airtable and documentation for it can be found [here](https://airtable.com/appHEYEeBcTMXB8Jq/api/docs).
 
+Lastly this app relies heavily on [MUI](https://mui.com/).
+
 ## Available Scripts
 
 In the project directory, you can run:
