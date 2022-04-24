@@ -111,7 +111,7 @@ export const feedingSlice = createSlice({
         state.isLoaded = true;
         state.selectedFeatureId = action?.payload[0].id || '';
       })
-      .addCase(createFeedingAsync.rejected, (state, action) => {
+      .addCase(createFeedingAsync.rejected, (state) => {
         state.isLoading = false;
         state.isLoaded = false;
       })
