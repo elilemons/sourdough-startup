@@ -54,12 +54,8 @@ export async function createItem<T extends { [key: string]: any }>({
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
       // TODO Remove this test code
-      console.log('ELITEST createItem SUCCESS 1', { data });
+      console.log('ELITEST createItem', { data });
       //^ TODO Remove this test code
 
       const res = data.records.map((record: AirTableRecord) => ({
@@ -71,9 +67,6 @@ export async function createItem<T extends { [key: string]: any }>({
       console.log('ELITEST createItem SUCCESS 2', { res });
       //^ TODO Remove this test code
       return res;
-    })
-    .catch((error) => {
-      console.error('ELITEST createItem FAILURE', { error });
     });
 }
 

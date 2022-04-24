@@ -1,16 +1,14 @@
 import { Add, Clear, Save } from '@mui/icons-material';
 import { DatePicker } from '@mui/lab';
 import { Stack, TextField } from '@mui/material';
-import { Field, Form, Formik, FormikProps, useFormikContext } from 'formik';
-import { useLayoutEffect } from 'react';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppButton } from '../../../shared/AppButton/AppButton';
 import {
   createFeedingAsync,
-  selectSelectedFeatureItem,
   setSelectedFeatureId,
   updateFeedingAsync,
 } from '../store/feedingSlice';
@@ -55,7 +53,11 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
     // TODO Remove this test code
     console.log('ELITEST onSubmit', { values });
     //^ TODO Remove this test code
-    dispatch(updateFeedingAsync({ ...selectedFeeding, ...values } as Feeding));
+    if (selectedFeeding) {
+      dispatch(updateFeedingAsync({ ...selectedFeeding, ...values }));
+    } else {
+      dispatch(createFeedingAsync(values));
+    }
   };
 
   const onReset = () => dispatch(setSelectedFeatureId(''));
