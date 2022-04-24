@@ -1,12 +1,4 @@
-import {
-  AppBar,
-  Card,
-  Container,
-  Stack,
-  SxProps,
-  Theme,
-  Typography,
-} from '@mui/material';
+import { AppBar, Card, Container, Stack, SxProps, Theme, Typography } from '@mui/material';
 
 interface Props {
   title: string;

@@ -1,7 +1,8 @@
 import { Stack, Typography } from '@mui/material';
-import { AppBox } from '../shared/AppBox/AppBox';
+
 import { FeedingContainer } from '../features/feeding/components/FeedingContainer';
 import { StarterContainer } from '../features/starter/components/StarterContainer';
+import { AppBox } from '../shared/AppBox/AppBox';
 
 export function Home() {
   /* Markup */

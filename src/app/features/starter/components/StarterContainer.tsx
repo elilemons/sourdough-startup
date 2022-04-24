@@ -1,12 +1,9 @@
 import { useLayoutEffect } from 'react';
-import {
-  getStartersAsync,
-  selectStarterIsLoading,
-  selectStarters,
-  selectSelectedStarter,
-} from '../store/starterSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import {
+    getStartersAsync, selectSelectedStarter, selectStarterIsLoading, selectStarters
+} from '../store/starterSlice';
 import { StarterDataGrid } from './StarterDataGrid';
 import { StarterForm } from './StarterForm';
 

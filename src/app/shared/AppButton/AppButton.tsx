@@ -1,5 +1,6 @@
-import { LoadingButton } from '@mui/lab';
 import { BaseSyntheticEvent } from 'react';
+
+import { LoadingButton } from '@mui/lab';
 
 interface Props {
   label: string;

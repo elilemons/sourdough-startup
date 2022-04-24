@@ -1,21 +1,15 @@
 import {
-  GridCallbackDetails,
-  GridCellEditCommitParams,
-  GridColDef,
-  GridRenderCellParams,
-  GridRowId,
-  MuiBaseEvent,
-  MuiEvent,
+    GridCallbackDetails, GridCellEditCommitParams, GridColDef, GridRenderCellParams, GridRowId,
+    MuiBaseEvent, MuiEvent
 } from '@mui/x-data-grid';
+
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
 import { useAppDispatch } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppDataGrid } from '../../../shared/AppDataGrid/AppDataGrid';
 import {
-  deleteFeedingAsync,
-  setSelectedFeatureId,
-  updateFeedingAsync,
+    deleteFeedingAsync, setSelectedFeatureId, updateFeedingAsync
 } from '../store/feedingSlice';
 
 interface Props {

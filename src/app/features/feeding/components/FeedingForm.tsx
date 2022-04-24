@@ -1,15 +1,9 @@
-import { Add, Clear, CopyAll, Save } from '@mui/icons-material';
-import { DatePicker } from '@mui/lab';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-} from '@mui/material';
 import { Field, Form, Formik, FormikProps } from 'formik';
+
+import { Add, Clear, Save } from '@mui/icons-material';
+import { DatePicker } from '@mui/lab';
+import { MenuItem, Stack, TextField } from '@mui/material';
+
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
 import { useAppDispatch } from '../../../hooks';

@@ -1,12 +1,6 @@
-import {
-  AppBar,
-  Container,
-  Link,
-  Stack,
-  Toolbar,
-  Typography,
-} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+
+import { AppBar, Container, Link, Stack, Toolbar, Typography } from '@mui/material';
 
 export function AppNavigation() {
   return (

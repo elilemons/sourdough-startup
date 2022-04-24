@@ -1,18 +1,12 @@
 import { useLayoutEffect } from 'react';
-import {
-  getFeedingsAsync,
-  selectFeedingIsLoading,
-  selectFeedings,
-  selectSelectedFeeding,
-} from '../store/feedingSlice';
-import {
-  getStartersAsync,
-  selectStarters,
-} from '../../starter/store/starterSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { selectStarters } from '../../starter/store/starterSlice';
 import { FeedingDataGrid } from '../components/FeedingDataGrid';
 import { FeedingForm } from '../components/FeedingForm';
+import {
+    getFeedingsAsync, selectFeedingIsLoading, selectFeedings, selectSelectedFeeding
+} from '../store/feedingSlice';
 
 export function FeedingContainer() {
   /* Shortcuts */

@@ -1,14 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../../store';
 
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
-import {
-  createItem,
-  deleteItem,
-  getItems,
-  updateItem,
-} from '../../../utils/api';
+import { RootState } from '../../../store';
+import { createItem, deleteItem, getItems, updateItem } from '../../../utils/api';
 
 const initialState: InitialStateType<Starter> = {
   items: [],

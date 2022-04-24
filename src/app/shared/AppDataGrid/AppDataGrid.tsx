@@ -7,13 +7,13 @@ import {
   GridColDef,
   GridRowId,
   GridRowParams,
-  GridSortingInitialState,
   GridSortModel,
   MuiBaseEvent,
   MuiEvent,
 } from '@mui/x-data-grid';
+
 import { Labels } from '../../../enums';
-import { camelCase } from '../../../utils';
+
 interface Props<T> {
   columns: GridColDef[];
   rows: T[];
