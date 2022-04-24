@@ -17,7 +17,7 @@ interface Props {
 }
 export function AppBox({ children, title, height, width, sx }: Props) {
   return (
-    <Stack sx={{ ...sx, flex: 1, width: width }}>
+    <Stack sx={{ ...sx, width: width }}>
       <AppBar position='static' color='secondary' component='div'>
         <Container maxWidth='xl' sx={{ px: 3, py: 1 }}>
           <Typography variant='button' component='div'>

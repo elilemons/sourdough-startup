@@ -6,7 +6,9 @@ export enum Labels {
   CLEAR = 'Clear',
   DATE = 'Date',
   DELETE = 'Delete',
+  DUPLICATE = 'Duplicate',
   ACQUIRED = 'Acquired',
+  NAME = 'Name',
   NOTES = 'Notes',
   IMAGE = 'Image',
   FEEDING = 'Feeding',
@@ -15,6 +17,7 @@ export enum Labels {
   LOAVES = 'Loaves',
   STARTER_ID = 'Starter Id',
   STARTER = 'Starter',
+  STARTERS = 'Starters',
   SAVE = 'Save',
 }
 

@@ -46,7 +46,7 @@ export async function createItem<T extends { [key: string]: any }>({
         {
           fields: {
             ...newItem,
-            starterId: [newItem.starterId],
+            starterId: [...newItem.starterId],
           },
         },
       ],

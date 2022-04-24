@@ -6,7 +6,7 @@ export const getFeatureItemsAsync = <T>({
 }: GetFeatureItemsAsyncParams<T>): AsyncThunk<T[], void, {}> =>
   createAsyncThunk(actionType, async () => {
     // TODO Remove this test code
-    console.log('ELITEST getFeedingsAsync called');
+    console.log('ELITEST getFeatureItemsAsync called');
     //^ TODO Remove this test code
 
     const response = await featureItemsGet();

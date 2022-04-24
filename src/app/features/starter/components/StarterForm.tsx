@@ -8,104 +8,78 @@ import { useAppDispatch } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppButton } from '../../../shared/AppButton/AppButton';
 import {
-  createFeedingAsync,
+  createStarterAsync,
   setSelectedFeatureId,
-  updateFeedingAsync,
-} from '../store/feedingSlice';
+  updateStarterAsync,
+} from '../store/starterSlice';
 
 interface Props {
   isLoading: boolean;
-  selectedFeeding?: Feeding;
-  starters?: Starter[];
+  selectedStarter?: Starter;
 }
 
-interface FeedingFormValues {
-  amount: number;
-  date: string;
+interface StarterFormValues {
+  acquired: string;
+  name: string;
   notes: string;
-  starterId: string;
 }
 
-export function FeedingForm({ isLoading, selectedFeeding, starters }: Props) {
+export function StarterForm({ isLoading, selectedStarter }: Props) {
   /* Shortcuts */
   const dispatch = useAppDispatch();
 
-  // const selectedFeeding = useAppSelector(selectSelectedFeatureItem);
+  // const selectedStarter = useAppSelector(selectSelectedFeatureItem);
   /* Page Logic */
-  const initialValues = selectedFeeding
+  const initialValues = selectedStarter
     ? {
-        amount: selectedFeeding?.amount || 0,
-        date: selectedFeeding?.date || new Date().toString(),
-        notes: selectedFeeding?.notes || '',
-        starterId: selectedFeeding?.starterId || '',
+        acquired: selectedStarter?.acquired || new Date().toString(),
+        name: selectedStarter?.name || '',
+        notes: selectedStarter?.notes || '',
       }
     : {
-        amount: 0,
-        date: new Date().toString(),
+        acquired: new Date().toString(),
+        name: '',
         notes: '',
-        starterId: '',
       };
 
-  const onAdd = (values: FeedingFormValues) => {
-    // TODO Remove this test code
-    console.log('ELITEST onAdd', { selectedFeeding, values });
-    //^ TODO Remove this test code
-    dispatch(createFeedingAsync(values));
+  const onAdd = (values: StarterFormValues) => {
+    dispatch(createStarterAsync({ ...values } as Starter));
   };
 
-  const onSubmit = (values: FeedingFormValues) => {
+  const onSubmit = (values: StarterFormValues) => {
     // TODO Remove this test code
-    console.log('ELITEST onSubmit', { selectedFeeding, values });
+    console.log('ELITEST onSubmit', { values });
     //^ TODO Remove this test code
-    if (selectedFeeding) {
-      dispatch(updateFeedingAsync({ ...selectedFeeding, ...values }));
+    if (selectedStarter) {
+      dispatch(updateStarterAsync({ ...selectedStarter, ...values }));
     } else {
-      dispatch(createFeedingAsync(values));
+      dispatch(createStarterAsync(values));
     }
   };
 
   const onReset = () => dispatch(setSelectedFeatureId(''));
 
   return (
-    <AppBox title='Feeding Form'>
+    <AppBox title='Starter Form'>
       <Formik
         initialValues={initialValues}
         enableReinitialize
         onSubmit={onSubmit}
       >
-        {(props: FormikProps<FeedingFormValues>) => (
-          <Form id='feeding-form'>
+        {(props: FormikProps<StarterFormValues>) => (
+          <Form id='starter-form'>
             <Stack spacing={2}>
               <Stack direction='row' spacing={2}>
                 <Field
-                  name='starterId'
+                  name={camelCase(Labels.NAME)}
                   as={TextField}
-                  label={Labels.STARTER}
+                  label={Labels.NAME}
                   fullWidth
-                >
-                  <InputLabel id='starter-select-label'>
-                    {Labels.STARTER}
-                  </InputLabel>
-                  <Select label={Labels.STARTER} labelId='starter-select-label'>
-                    {starters?.map((starter) => (
-                      <MenuItem value={starter.id}>{starter.name}</MenuItem>
-                    ))}
-                  </Select>
-                </Field>
-                <Field
-                  name={camelCase(Labels.AMOUNT)}
-                  as={TextField}
-                  label={Labels.AMOUNT}
-                  fullWidth
-                  InputProps={{
-                    type: 'number',
-                  }}
                 />
                 <Field
                   as={DatePicker}
-                  name={camelCase(Labels.DATE)}
-                  label={Labels.DATE}
-                  fullWidth
+                  name={camelCase(Labels.ACQUIRED)}
+                  label={Labels.ACQUIRED}
                   onChange={(params: any) =>
                     props.setFieldValue(camelCase(Labels.DATE), params)
                   }
@@ -127,8 +101,8 @@ export function FeedingForm({ isLoading, selectedFeeding, starters }: Props) {
               <AppButton
                 color='primary'
                 isLoading={isLoading}
-                startIcon={selectedFeeding ? <CopyAll /> : <Add />}
-                label={selectedFeeding ? Labels.DUPLICATE : Labels.ADD}
+                startIcon={selectedStarter ? <CopyAll /> : <Add />}
+                label={selectedStarter ? Labels.DUPLICATE : Labels.ADD}
                 onClick={() => onAdd(props.values)}
                 type='button'
               />

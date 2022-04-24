@@ -7,16 +7,16 @@ interface Feeding {
 }
 
 interface Starter {
-  _id?: string;
+  id?: string;
+  acquired: date; // date
   name: string;
-  acquired: string;
-  notes?: string;
   feedingIds?: string[];
   loafIds?: string[];
+  notes?: string;
 }
 
 interface Loaf {
-  _id?: string;
+  id?: string;
   date: string;
   image: string;
   name: string;

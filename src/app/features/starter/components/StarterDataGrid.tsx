@@ -12,25 +12,29 @@ import { useAppDispatch } from '../../../hooks';
 import { AppBox } from '../../../shared/AppBox/AppBox';
 import { AppDataGrid } from '../../../shared/AppDataGrid/AppDataGrid';
 import {
-  deleteFeedingAsync,
+  deleteStarterAsync,
   setSelectedFeatureId,
-  updateFeedingAsync,
-} from '../store/feedingSlice';
+  updateStarterAsync,
+} from '../store/starterSlice';
 
 interface Props {
-  feedings: Feeding[];
+  starters: Starter[];
 }
 
-export function FeedingDataGrid(props: Props) {
+export function StarterDataGrid(props: Props) {
   /* Shortcuts */
-  const { feedings } = props;
+  const { starters } = props;
   const dispatch = useAppDispatch();
 
   /* Page Logic */
-  const onRowClick = (id: GridRowId) =>
-    dispatch(setSelectedFeatureId(id as string));
+  const onRowClick = (id: GridRowId) => {
+    // TODO Remove this test code
+    console.log('ELITEST onRowClick', { id });
+    // ^ TODO Remove this test code
+    return dispatch(setSelectedFeatureId(id as string));
+  };
   const onDeleteClick = (id: GridRowId) =>
-    dispatch(deleteFeedingAsync(id as string));
+    dispatch(deleteStarterAsync(id as string));
 
   const onCellEditCommit = (
     params: GridCellEditCommitParams,
@@ -40,7 +44,7 @@ export function FeedingDataGrid(props: Props) {
     // TODO Remove this test code
     console.log('ELITEST onCellEditCommit', { params, event, details });
     //^ TODO Remove this test code
-    const newItem = feedings
+    const newItem = starters
       .filter((item) => item.id === params.id)
       .map((item) => ({
         ...item,
@@ -49,7 +53,7 @@ export function FeedingDataGrid(props: Props) {
     // TODO Remove this test code
     console.log('ELITEST onCellEditCommit', { newItem });
     //^ TODO Remove this test code
-    dispatch(updateFeedingAsync({ ...newItem[0] } as Feeding));
+    dispatch(updateStarterAsync({ ...newItem[0] } as Starter));
   };
   /* - Columns */
   const columns: GridColDef[] = [
@@ -59,18 +63,18 @@ export function FeedingDataGrid(props: Props) {
       hide: true,
     },
     {
-      field: camelCase(Labels.AMOUNT),
-      headerName: Labels.AMOUNT,
-      flex: 1,
-      editable: true,
-      type: 'string',
-    },
-    {
-      field: camelCase(Labels.DATE),
-      headerName: Labels.DATE,
+      field: camelCase(Labels.ACQUIRED),
+      headerName: Labels.ACQUIRED,
       flex: 1,
       editable: true,
       type: 'date',
+    },
+    {
+      field: camelCase(Labels.NAME),
+      headerName: Labels.NAME,
+      flex: 3,
+      editable: true,
+      type: 'string',
     },
     {
       field: camelCase(Labels.NOTES),
@@ -84,9 +88,9 @@ export function FeedingDataGrid(props: Props) {
   /* Markup */
   return (
     <>
-      <AppBox title={Labels.FEEDINGS} height={500}>
+      <AppBox title={Labels.STARTERS} height={500}>
         <AppDataGrid
-          rows={feedings}
+          rows={starters}
           columns={columns}
           rowIdKey={'id'}
           onCellEditCommit={onCellEditCommit}
