@@ -39,6 +39,9 @@ export function AppNavigation() {
               <Link component={RouterLink} to='/feeding'>
                 Feeding
               </Link>
+              <Link component={RouterLink} to='/starter'>
+                Starter
+              </Link>
             </Stack>
           </Stack>
         </Toolbar>
