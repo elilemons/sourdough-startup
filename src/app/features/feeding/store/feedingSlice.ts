@@ -162,16 +162,16 @@ export const { deleteFeature, setSelectedFeatureId } = feedingSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.feeding.value)`
-export const selectFeatureItems = (state: RootState) => state.feeding.items;
-export const selectFeatureIsLoading = (state: RootState) =>
+export const selectFeedings = (state: RootState) => state.feeding.items;
+export const selectFeedingIsLoading = (state: RootState) =>
   state.feeding.isLoading;
-export const selectFeatureIsLoaded = (state: RootState) =>
+export const selectFeedingIsLoaded = (state: RootState) =>
   state.feeding.isLoaded;
-export const selectSelectedFeatureId = (state: RootState) =>
+export const selectSelectedFeedingId = (state: RootState) =>
   state.feeding.selectedFeatureId;
-export const selectSelectedFeatureItem = (state: RootState) =>
+export const selectSelectedFeeding = (state: RootState) =>
   state.feeding.items.find(
-    (item) => item.id === selectSelectedFeatureId(state)
+    (item) => item.id === selectSelectedFeedingId(state)
   );
 
 export default feedingSlice.reducer;

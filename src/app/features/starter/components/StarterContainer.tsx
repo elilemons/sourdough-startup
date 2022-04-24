@@ -1,9 +1,9 @@
 import { useLayoutEffect } from 'react';
 import {
   getStartersAsync,
-  selectFeatureIsLoading,
-  selectFeatureItems,
-  selectSelectedFeatureItem,
+  selectStarterIsLoading,
+  selectStarters,
+  selectSelectedStarter,
 } from '../store/starterSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
@@ -15,9 +15,9 @@ export function StarterContainer() {
   const dispatch = useAppDispatch();
 
   /* Selectors */
-  const starters = useAppSelector(selectFeatureItems);
-  const selectedStarter = useAppSelector(selectSelectedFeatureItem);
-  const selectStarterIsLoading = useAppSelector(selectFeatureIsLoading);
+  const starters = useAppSelector(selectStarters);
+  const selectedStarter = useAppSelector(selectSelectedStarter);
+  const starterIsLoading = useAppSelector(selectStarterIsLoading);
   // const starters = useAppSelector(selectFeatureItems);
 
   /* - Trigger initial get call here */
@@ -31,7 +31,7 @@ export function StarterContainer() {
   return (
     <>
       <StarterForm
-        isLoading={selectStarterIsLoading}
+        isLoading={starterIsLoading}
         selectedStarter={selectedStarter}
       />
       <StarterDataGrid starters={starters} />

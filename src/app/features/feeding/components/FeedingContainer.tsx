@@ -1,10 +1,11 @@
 import { useLayoutEffect } from 'react';
 import {
   getFeedingsAsync,
-  selectFeatureIsLoading,
-  selectFeatureItems,
-  selectSelectedFeatureItem,
+  selectFeedingIsLoading,
+  selectFeedings,
+  selectSelectedFeeding,
 } from '../store/feedingSlice';
+import { selectStarters as selectStarters } from '../../starter/store/starterSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
 import { FeedingDataGrid } from '../components/FeedingDataGrid';
@@ -15,10 +16,11 @@ export function FeedingContainer() {
   const dispatch = useAppDispatch();
 
   /* Selectors */
-  const feedings = useAppSelector(selectFeatureItems);
-  const selectedFeeding = useAppSelector(selectSelectedFeatureItem);
-  const selectFeedingIsLoading = useAppSelector(selectFeatureIsLoading);
-  // const starters = useAppSelector(selectFeatureItems);
+  const feedings = useAppSelector(selectFeedings);
+  const selectedFeeding = useAppSelector(selectSelectedFeeding);
+  const feedingIsLoading = useAppSelector(selectFeedingIsLoading);
+
+  const starters = useAppSelector(selectStarters);
 
   /* - Trigger initial get call here */
   useLayoutEffect(() => {
@@ -31,8 +33,9 @@ export function FeedingContainer() {
   return (
     <>
       <FeedingForm
-        isLoading={selectFeedingIsLoading}
+        isLoading={feedingIsLoading}
         selectedFeeding={selectedFeeding}
+        starters={starters}
       />
       <FeedingDataGrid feedings={feedings} />
     </>

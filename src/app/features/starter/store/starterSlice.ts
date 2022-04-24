@@ -162,16 +162,16 @@ export const { deleteFeature, setSelectedFeatureId } = starterSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.starter.value)`
-export const selectFeatureItems = (state: RootState) => state.starter.items;
-export const selectFeatureIsLoading = (state: RootState) =>
+export const selectStarters = (state: RootState) => state.starter.items;
+export const selectStarterIsLoading = (state: RootState) =>
   state.starter.isLoading;
-export const selectFeatureIsLoaded = (state: RootState) =>
+export const selectStarterIsLoaded = (state: RootState) =>
   state.starter.isLoaded;
-export const selectSelectedFeatureId = (state: RootState) =>
+export const selectSelectedStarterId = (state: RootState) =>
   state.starter.selectedFeatureId;
-export const selectSelectedFeatureItem = (state: RootState) =>
+export const selectSelectedStarter = (state: RootState) =>
   state.starter.items.find(
-    (item) => item.id === selectSelectedFeatureId(state)
+    (item) => item.id === selectSelectedStarterId(state)
   );
 
 export default starterSlice.reducer;
