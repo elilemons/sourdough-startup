@@ -20,9 +20,9 @@ interface Loaf {
   date: string;
   image: string;
   name: string;
-  notes?: string;
   rating: number;
   starterId: string;
+  notes?: string;
 }
 
 interface InitialStateType<T> {

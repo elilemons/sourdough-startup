@@ -1,6 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 
 import { FeedingContainer } from '../features/feeding/components/FeedingContainer';
+import { LoafContainer } from '../features/loaf/components/LoafContainer';
 import { StarterContainer } from '../features/starter/components/StarterContainer';
 import { AppBox } from '../shared/AppBox/AppBox';
 
@@ -23,10 +24,9 @@ export function Home() {
         </Stack>
         <Stack direction='column' width={'50%'} justifyContent='space-between'>
           <StarterContainer />
-          {/* TODO Loaves */}
-          <AppBox title='Loaves' />
         </Stack>
       </Stack>
+      <LoafContainer />
     </>
   );
 }

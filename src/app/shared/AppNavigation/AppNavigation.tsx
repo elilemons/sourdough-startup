@@ -1,6 +1,14 @@
 import { Link as RouterLink } from 'react-router-dom';
 
-import { AppBar, Container, Link, Stack, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Container,
+  Link,
+  Stack,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import { Labels } from '../../../enums';
 
 export function AppNavigation() {
   return (
@@ -28,13 +36,16 @@ export function AppNavigation() {
               spacing={3}
             >
               <Link component={RouterLink} to='/'>
-                Home
+                {Labels.HOME}
               </Link>
               <Link component={RouterLink} to='/feeding'>
-                Feeding
+                {Labels.FEEDING}
               </Link>
               <Link component={RouterLink} to='/starter'>
-                Starter
+                {Labels.STARTER}
+              </Link>
+              <Link component={RouterLink} to='/LOAF'>
+                {Labels.LOAF}
               </Link>
             </Stack>
           </Stack>
