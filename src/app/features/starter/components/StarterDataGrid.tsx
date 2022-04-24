@@ -99,7 +99,7 @@ export function StarterDataGrid(props: Props) {
           includeActions={true}
           sortModel={[
             {
-              field: camelCase(Labels.DATE),
+              field: camelCase(Labels.ACQUIRED),
               sort: 'asc',
             },
           ]}

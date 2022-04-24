@@ -1,4 +1,5 @@
-import { HTTP_Methods } from '../../enums';
+import { HTTP_Methods, Labels } from '../../enums';
+import { camelCase } from '../../utils';
 
 const request: RequestInit = {
   headers: {
@@ -44,10 +45,12 @@ export async function createItem<T extends { [key: string]: any }>({
     body: JSON.stringify({
       records: [
         {
-          fields: {
-            ...newItem,
-            starterId: [...newItem.starterId],
-          },
+          fields:
+            featureName === camelCase(Labels.FEEDING)
+              ? { ...newItem, starterId: [newItem.starterId] }
+              : {
+                  ...newItem,
+                },
         },
       ],
     }),

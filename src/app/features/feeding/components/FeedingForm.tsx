@@ -1,6 +1,14 @@
 import { Add, Clear, CopyAll, Save } from '@mui/icons-material';
 import { DatePicker } from '@mui/lab';
-import { InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  TextField,
+} from '@mui/material';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
@@ -79,18 +87,19 @@ export function FeedingForm({ isLoading, selectedFeeding, starters }: Props) {
               <Stack direction='row' spacing={2}>
                 <Field
                   name='starterId'
-                  as={TextField}
                   label={Labels.STARTER}
+                  as={TextField}
+                  select
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    props.setFieldValue('starterId', e.target.value)
+                  }
                   fullWidth
                 >
-                  <InputLabel id='starter-select-label'>
-                    {Labels.STARTER}
-                  </InputLabel>
-                  <Select label={Labels.STARTER} labelId='starter-select-label'>
-                    {starters?.map((starter) => (
-                      <MenuItem value={starter.id}>{starter.name}</MenuItem>
-                    ))}
-                  </Select>
+                  {starters?.map((starter) => (
+                    <MenuItem key={starter.id} value={starter.id}>
+                      {starter.name}
+                    </MenuItem>
+                  ))}
                 </Field>
                 <Field
                   name={camelCase(Labels.AMOUNT)}
@@ -124,22 +133,31 @@ export function FeedingForm({ isLoading, selectedFeeding, starters }: Props) {
               />
             </Stack>
             <Stack direction='row' spacing={2} justifyContent='space-between'>
-              <AppButton
-                color='primary'
-                isLoading={isLoading}
-                startIcon={selectedFeeding ? <CopyAll /> : <Add />}
-                label={selectedFeeding ? Labels.DUPLICATE : Labels.ADD}
-                onClick={() => onAdd(props.values)}
-                type='button'
-              />
-              <Stack direction='row'>
+              {selectedFeeding && (
+                <div style={{ width: '100%' }}>
+                  <AppButton
+                    color='info'
+                    isLoading={isLoading}
+                    startIcon={<Add />}
+                    label={Labels.ADD_NEW}
+                    type='button'
+                    onClick={() => onAdd(props.values)}
+                  />
+                </div>
+              )}
+              <Stack
+                direction='row'
+                justifyContent='flex-end'
+                sx={{ width: '100%' }}
+              >
                 <AppButton
                   color='success'
                   isLoading={isLoading}
-                  startIcon={<Save />}
-                  label={Labels.SAVE}
+                  startIcon={selectedFeeding ? <Save /> : <Add />}
+                  label={selectedFeeding ? Labels.SAVE : Labels.ADD}
                   type='submit'
                 />
+
                 <AppButton
                   color='warning'
                   startIcon={<Clear />}

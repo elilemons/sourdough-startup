@@ -8,7 +8,7 @@ interface Feeding {
 
 interface Starter {
   id?: string;
-  acquired: date; // date
+  acquired: string;
   name: string;
   feedingIds?: string[];
   loafIds?: string[];

@@ -3,6 +3,7 @@ export enum Labels {
   ID = 'Id',
   AMOUNT = 'Amount',
   ADD = 'Add',
+  ADD_NEW = 'Add New',
   CLEAR = 'Clear',
   DATE = 'Date',
   DELETE = 'Delete',

@@ -18,7 +18,6 @@ export function StarterContainer() {
   const starters = useAppSelector(selectStarters);
   const selectedStarter = useAppSelector(selectSelectedStarter);
   const starterIsLoading = useAppSelector(selectStarterIsLoading);
-  // const starters = useAppSelector(selectFeatureItems);
 
   /* - Trigger initial get call here */
   useLayoutEffect(() => {

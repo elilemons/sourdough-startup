@@ -2,6 +2,7 @@ import {
   GridCallbackDetails,
   GridCellEditCommitParams,
   GridColDef,
+  GridRenderCellParams,
   GridRowId,
   MuiBaseEvent,
   MuiEvent,
@@ -19,11 +20,11 @@ import {
 
 interface Props {
   feedings: Feeding[];
+  starters: Starter[];
 }
 
-export function FeedingDataGrid(props: Props) {
+export function FeedingDataGrid({ feedings, starters }: Props) {
   /* Shortcuts */
-  const { feedings } = props;
   const dispatch = useAppDispatch();
 
   /* Page Logic */
@@ -57,6 +58,13 @@ export function FeedingDataGrid(props: Props) {
       field: 'id',
       headerName: Labels.ID,
       hide: true,
+    },
+    {
+      field: 'starterId',
+      headerName: Labels.STARTER,
+      renderCell: (params: GridRenderCellParams) =>
+        starters.find((starter) => starter.id === params.row.starterId[0])
+          ?.name,
     },
     {
       field: camelCase(Labels.AMOUNT),

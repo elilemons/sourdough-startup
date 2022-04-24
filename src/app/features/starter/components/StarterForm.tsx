@@ -1,6 +1,6 @@
 import { Add, Clear, CopyAll, Save } from '@mui/icons-material';
 import { DatePicker } from '@mui/lab';
-import { InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
@@ -97,23 +97,32 @@ export function StarterForm({ isLoading, selectedStarter }: Props) {
                 maxRows={4}
               />
             </Stack>
-            <Stack direction='row' spacing={2} justifyContent='space-between'>
-              <AppButton
-                color='primary'
-                isLoading={isLoading}
-                startIcon={selectedStarter ? <CopyAll /> : <Add />}
-                label={selectedStarter ? Labels.DUPLICATE : Labels.ADD}
-                onClick={() => onAdd(props.values)}
-                type='button'
-              />
-              <Stack direction='row'>
+            <Stack direction='row' spacing={2} justifyContent='spce-between'>
+              {selectedStarter && (
+                <div style={{ width: '100%' }}>
+                  <AppButton
+                    color='info'
+                    isLoading={isLoading}
+                    startIcon={<Add />}
+                    label={Labels.ADD_NEW}
+                    type='button'
+                    onClick={() => onAdd(props.values)}
+                  />
+                </div>
+              )}
+              <Stack
+                direction='row'
+                justifyContent='flex-end'
+                sx={{ width: '100%' }}
+              >
                 <AppButton
                   color='success'
                   isLoading={isLoading}
-                  startIcon={<Save />}
-                  label={Labels.SAVE}
+                  startIcon={selectedStarter ? <Save /> : <Add />}
+                  label={selectedStarter ? Labels.SAVE : Labels.ADD}
                   type='submit'
                 />
+
                 <AppButton
                   color='warning'
                   startIcon={<Clear />}

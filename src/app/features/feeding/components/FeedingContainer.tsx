@@ -5,7 +5,10 @@ import {
   selectFeedings,
   selectSelectedFeeding,
 } from '../store/feedingSlice';
-import { selectStarters as selectStarters } from '../../starter/store/starterSlice';
+import {
+  getStartersAsync,
+  selectStarters,
+} from '../../starter/store/starterSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
 import { FeedingDataGrid } from '../components/FeedingDataGrid';
@@ -37,7 +40,7 @@ export function FeedingContainer() {
         selectedFeeding={selectedFeeding}
         starters={starters}
       />
-      <FeedingDataGrid feedings={feedings} />
+      <FeedingDataGrid feedings={feedings} starters={starters} />
     </>
   );
 }
