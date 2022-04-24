@@ -1,6 +1,6 @@
 import { Add, Clear, Save } from '@mui/icons-material';
 import { DatePicker } from '@mui/lab';
-import { Stack, TextField } from '@mui/material';
+import { InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { Labels } from '../../../../enums';
 import { camelCase } from '../../../../utils';
@@ -16,6 +16,7 @@ import {
 interface Props {
   isLoading: boolean;
   selectedFeeding?: Feeding;
+  starters?: Starter[];
 }
 
 interface FeedingFormValues {
@@ -25,7 +26,7 @@ interface FeedingFormValues {
   starterId: string;
 }
 
-export function FeedingForm({ isLoading, selectedFeeding }: Props) {
+export function FeedingForm({ isLoading, selectedFeeding, starters }: Props) {
   /* Shortcuts */
   const dispatch = useAppDispatch();
 
@@ -78,7 +79,16 @@ export function FeedingForm({ isLoading, selectedFeeding }: Props) {
                   as={TextField}
                   label={Labels.STARTER}
                   fullWidth
-                />
+                >
+                  <InputLabel id='starter-select-label'>
+                    {Labels.STARTER}
+                  </InputLabel>
+                  <Select label={Labels.STARTER} labelId='starter-select-label'>
+                    {starters?.map((starter) => (
+                      <MenuItem value={starter._id}>{starter.name}</MenuItem>
+                    ))}
+                  </Select>
+                </Field>
                 <Field
                   name={camelCase(Labels.AMOUNT)}
                   as={TextField}

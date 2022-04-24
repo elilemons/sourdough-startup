@@ -18,7 +18,7 @@ export function FeedingContainer() {
   const feedings = useAppSelector(selectFeatureItems);
   const selectedFeeding = useAppSelector(selectSelectedFeatureItem);
   const selectFeedingIsLoading = useAppSelector(selectFeatureIsLoading);
-  /* Page Logic */
+  // const starters = useAppSelector(selectFeatureItems);
 
   /* - Trigger initial get call here */
   useLayoutEffect(() => {
