@@ -18,7 +18,7 @@ interface Starter {
 interface Loaf {
   id?: string;
   date: string;
-  image: string;
+  image?: AirTableAttachment[];
   name: string;
   rating: number;
   starterId: string;
@@ -60,4 +60,24 @@ interface AirTableRecord {
 interface DeleteResponse {
   id: string;
   deleted: boolean;
+}
+
+interface AirTableAttachment {
+  id?: string;
+  size?: number;
+  type?: string;
+  url: string;
+  filename: string;
+  thumbnails?: {
+    small: {
+      url: string;
+      width: number;
+      height: number;
+    };
+    large: {
+      url: string;
+      width: number;
+      height: number;
+    };
+  };
 }

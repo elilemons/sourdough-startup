@@ -136,3 +136,50 @@ export async function deleteItem({
       console.error('ELITEST deleteItem ERROR', { error });
     });
 }
+
+export async function uploadFile(file: File) {
+  const data = new FormData();
+  data.append('image', file);
+
+  return await fetch('https://api.imgur.com/3/image', {
+    headers: {
+      Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+    },
+    method: 'POST',
+    body: data,
+  })
+    .then((response) => {
+      // TODO Remove this test code
+      console.log('ELITEST response from imgur', { response });
+      // ^ TODO Remove this test code
+      return response.json();
+    })
+    .then((result) => {
+      // TODO Remove this test code
+      console.log('ELITEST result from imgur', { result });
+      // ^ TODO Remove this test code
+      return result;
+    })
+    .catch((error) => {
+      console.error('ELITEST uploadFile ERROR', { error });
+    });
+}
+
+export async function deleteImage(deleteHash: string) {
+  return await fetch(`https://api.imgur.com/3/image/${deleteHash}`, {
+    headers: {
+      Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+    },
+    method: 'DELETE',
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      // TODO Remove this test code
+      console.log('ELITEST successfully deleted', { result });
+      // ^ TODO Remove this test code
+      return result;
+    })
+    .catch((error) =>
+      console.error('There was an error deleting the image: ', { error })
+    );
+}

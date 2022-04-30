@@ -14,6 +14,9 @@ import {
   setSelectedFeatureId,
   updateLoafAsync,
 } from '../store/loafSlice';
+import { AppUpload } from '../../../shared/AppUpload/AppUpload';
+import { deleteImage, uploadFile } from '../../../utils/api';
+import { useState } from 'react';
 
 interface Props {
   isLoading: boolean;
@@ -23,33 +26,36 @@ interface Props {
 
 interface LoafFormValues {
   date: string;
-  image: string;
   name: string;
   rating: number;
   starterId: string;
+  image?: AirTableAttachment[];
   notes?: string;
 }
 
 export function LoafForm({ isLoading, selectedLoaf, starters }: Props) {
+  /* State */
+  const [deleteImageHash, setDeleteImageHash] = useState<string>('');
+  const [imageData, setImageData] = useState<File>();
+
   /* Shortcuts */
   const dispatch = useAppDispatch();
 
-  // const selectedLoaf = useAppSelector(selectSelectedFeatureItem);
   /* Page Logic */
   const initialValues = selectedLoaf
     ? {
         date: selectedLoaf?.date || new Date().toString(),
-        image: selectedLoaf?.image || '',
+        image: selectedLoaf?.image,
         name: selectedLoaf?.name || '',
-        rating: selectedLoaf?.rating || 0,
+        rating: selectedLoaf?.rating || 1,
         starterId: selectedLoaf?.starterId || '',
         notes: selectedLoaf?.notes || '',
       }
     : {
         date: new Date().toString(),
-        image: '',
+        image: [],
         name: '',
-        rating: 0,
+        rating: 1,
         starterId: '',
         notes: '',
       };
@@ -65,10 +71,37 @@ export function LoafForm({ isLoading, selectedLoaf, starters }: Props) {
     // TODO Remove this test code
     console.log('ELITEST onSubmit', { selectedLoaf, values });
     //^ TODO Remove this test code
-    if (selectedLoaf) {
-      dispatch(updateLoafAsync({ ...selectedLoaf, ...values }));
+    if (imageData) {
+      // TODO Verify the image changed
+      uploadFile(imageData).then((result) => {
+        setDeleteImageHash(result.data.deletehash);
+        values.image = [
+          {
+            url: result.data.link,
+            filename: imageData.name,
+          },
+        ];
+
+        // TODO Remove this test code
+        console.log('ELITEST uploadFile', { result, deleteImageHash });
+        // ^ TODO Remove this test code
+
+        if (selectedLoaf) {
+          dispatch(updateLoafAsync(values)).then(() =>
+            deleteImage(result.data.deletehash)
+          );
+        } else {
+          dispatch(createLoafAsync(values)).then(() =>
+            deleteImage(result.data.deletehash)
+          );
+        }
+      });
     } else {
-      dispatch(createLoafAsync(values));
+      if (selectedLoaf) {
+        dispatch(updateLoafAsync(values));
+      } else {
+        dispatch(createLoafAsync(values));
+      }
     }
   };
 
@@ -113,7 +146,7 @@ export function LoafForm({ isLoading, selectedLoaf, starters }: Props) {
                   name={camelCase(Labels.RATING)}
                   as={Rating}
                   label={Labels.RATING}
-                  fullWidth
+                  type='number'
                 />
                 <Field
                   as={DatePicker}
@@ -130,7 +163,10 @@ export function LoafForm({ isLoading, selectedLoaf, starters }: Props) {
               </Stack>
               <Field
                 name={camelCase(Labels.IMAGE)}
-                as={TextField}
+                as={AppUpload}
+                onUpload={(file: File) => {
+                  setImageData(file);
+                }}
                 label={Labels.IMAGE}
                 fullWidth
               />
