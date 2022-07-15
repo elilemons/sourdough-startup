@@ -19,7 +19,7 @@ export async function getItems<T>({ featureName }: ApiRequest): Promise<T[]> {
     .then((response) => response.json())
     .then((data) => {
       // TODO Remove this test code
-      console.log('ELITEST getItems SUCESSS', { data });
+      console.log('ELITEST getItems SUCESSS', { featureName, data });
       //^ TODO Remove this test code
       if (data.error) {
         throw new Error(data.error);
