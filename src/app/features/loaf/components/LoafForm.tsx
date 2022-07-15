@@ -35,7 +35,6 @@ interface LoafFormValues {
 
 export function LoafForm({ isLoading, selectedLoaf, starters }: Props) {
   /* State */
-  const [deleteImageHash, setDeleteImageHash] = useState<string>('');
   const [imageData, setImageData] = useState<File>();
 
   /* Shortcuts */
@@ -74,7 +73,6 @@ export function LoafForm({ isLoading, selectedLoaf, starters }: Props) {
     if (imageData) {
       // TODO Verify the image changed
       uploadFile(imageData).then((result) => {
-        setDeleteImageHash(result.data.deletehash);
         values.image = [
           {
             url: result.data.link,
@@ -83,7 +81,7 @@ export function LoafForm({ isLoading, selectedLoaf, starters }: Props) {
         ];
 
         // TODO Remove this test code
-        console.log('ELITEST uploadFile', { result, deleteImageHash });
+        console.log('ELITEST uploadFile', { result });
         // ^ TODO Remove this test code
 
         if (selectedLoaf) {
