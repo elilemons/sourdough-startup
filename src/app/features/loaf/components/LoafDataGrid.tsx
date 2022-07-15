@@ -64,14 +64,17 @@ export function LoafDataGrid({ loaves, starters }: Props) {
     {
       field: 'starterId',
       headerName: Labels.STARTER,
+      flex: 2,
       renderCell: (params: GridRenderCellParams) =>
-        starters.find((starter) => starter.id === params.row.starterId[0])
-          ?.name,
+        starters.find(
+          (starter) =>
+            params.row.starterId && starter.id === params.row.starterId[0]
+        )?.name,
     },
     {
       field: camelCase(Labels.NAME),
       headerName: Labels.NAME,
-      flex: 1,
+      flex: 2,
       editable: true,
       type: 'string',
     },
