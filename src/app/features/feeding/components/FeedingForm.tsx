@@ -89,6 +89,9 @@ export function FeedingForm({ isLoading, selectedFeeding, starters }: Props) {
                   }
                   fullWidth
                 >
+                  <MenuItem>
+                    <em>Select a Starter</em>
+                  </MenuItem>
                   {starters?.map((starter) => (
                     <MenuItem key={starter.id} value={starter.id}>
                       {starter.name}
